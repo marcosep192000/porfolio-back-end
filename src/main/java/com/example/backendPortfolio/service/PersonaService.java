@@ -15,6 +15,11 @@ import java.util.Set;
 @AllArgsConstructor
 @Service
 public class PersonaService implements IpersonaService {
+
+
+
+
+
      @Autowired
     public final PersonaRepository persona;
 
@@ -33,8 +38,6 @@ public class PersonaService implements IpersonaService {
         return persona.findById(id).orElse(null);
     }
 
-
-
     @Override
     public Persona editar(Persona persona) {
         return null;
@@ -44,6 +47,9 @@ public class PersonaService implements IpersonaService {
     public void eliminar(Long id) {
       persona.deleteById(id);
     }
+
+
+
 
 }
 

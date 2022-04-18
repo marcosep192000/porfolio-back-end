@@ -11,4 +11,5 @@ public interface IpersonaService {
     public void crear(Persona persona);
     public Persona editar(Persona persona);
     public void eliminar(Long id);
+
 }
