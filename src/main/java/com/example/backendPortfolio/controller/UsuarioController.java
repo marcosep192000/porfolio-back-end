@@ -5,7 +5,6 @@ import com.example.backendPortfolio.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,13 +19,12 @@ public class UsuarioController {
 
     @GetMapping("/persona")
     @ResponseBody
-    public List<Persona>traer()
+    public ResponseEntity<List<Persona>>traer()
     {
-        return personaService.listarTodos();
+        return ResponseEntity.ok(personaService.listarTodos());
     }
-
 @PostMapping("/persona/add")
-    public ResponseEntity<Persona> save(@Valid  @RequestBody  Persona persona ,BindingResult bindingResult){
+    public ResponseEntity<Persona> save(@Valid  @RequestBody  Persona persona,BindingResult bindingResult){
         if (bindingResult.hasErrors())
             return new ResponseEntity("datos mal ingresados",HttpStatus.BAD_REQUEST);
                 personaService.crear(persona);
@@ -34,8 +32,5 @@ public class UsuarioController {
 
     }
 
-    public PersonaService getPersonaService() {
 
-        return personaService;
-    }
 }

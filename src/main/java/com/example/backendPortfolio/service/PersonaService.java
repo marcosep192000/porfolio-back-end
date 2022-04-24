@@ -5,12 +5,8 @@ import com.example.backendPortfolio.repository.PersonaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @Service

@@ -2,7 +2,6 @@ package com.example.backendPortfolio.security.entity;
 
 import com.example.backendPortfolio.security.enums.RolNombre;
 import com.sun.istack.NotNull;
-import lombok.*;
 
 import javax.persistence.*;
 

@@ -1,9 +1,12 @@
 package com.example.backendPortfolio.security.entity;
 
 
+import com.example.backendPortfolio.entity.Persona;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -11,14 +14,11 @@ import java.util.Set;
  */
 @Entity
 public class Usuario {
-    //Id de la tabla
     @Id
-    //Id Auto Increment
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idUsuario;
-    //Decorador para indicar que no puede ser null el campo
-    @NotNull
-    private String nombre;
+
+
     @NotNull
     @Column(unique = true)
     private String nombreUsuario;
@@ -28,14 +28,13 @@ public class Usuario {
     @NotNull
     private String password;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private List<Persona> personasList;
+
+
     @NotNull
-    //Relación many to many
-    //Un usuario puede tener MUCHOS roles y un rol puede PERTENECER a varios usuarios
-    //Tabla intermedia que tiene dos campos que va a tener idUsuario y idRol
-    @ManyToMany(fetch  = FetchType.EAGER)
-    // join columns hace referencia a la columna que hace referencia hacia esta
-    // Es decir la tabla usuario_rol va a tener un campo que se llama id_usuario
-    // inverseJoinColumns = el inverso, hace referencia a rol
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "id_usuario"),
             inverseJoinColumns = @JoinColumn(name = "rol_id"))
     private Set<Rol> roles = new HashSet<>();
@@ -43,12 +42,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    //Constuctor sin Id ni Roles
-    public Usuario(@NotNull String nombre,
-                   @NotNull String nombreUsuario,
-                   @NotNull String email,
-                   @NotNull String password) {
-        this.nombre = nombre;
+    public Usuario(String nombreUsuario, String email, String password) {
         this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.password = password;
@@ -62,20 +56,12 @@ public class Usuario {
         this.idUsuario = idUsuario;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getUsuario() {
+    public String getNombreUsuario() {
         return nombreUsuario;
     }
 
-    public void setUsuario(String usuario) {
-        this.nombreUsuario = usuario;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getEmail() {
@@ -92,6 +78,14 @@ public class Usuario {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Persona> getPersonasList() {
+        return personasList;
+    }
+
+    public void setPersonasList(List<Persona> personasList) {
+        this.personasList = personasList;
     }
 
     public Set<Rol> getRoles() {

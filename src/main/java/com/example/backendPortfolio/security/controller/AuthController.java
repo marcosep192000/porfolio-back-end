@@ -7,9 +7,9 @@ import com.example.backendPortfolio.security.dto.NuevoUsuario;
 import com.example.backendPortfolio.security.entity.Rol;
 import com.example.backendPortfolio.security.entity.Usuario;
 import com.example.backendPortfolio.security.enums.RolNombre;
-import com.example.backendPortfolio.security.jwt.JwtProvider;
 import com.example.backendPortfolio.security.service.RolService;
 import com.example.backendPortfolio.security.service.UsuarioService;
+import com.example.backendPortfolio.security.jwt.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -46,13 +47,9 @@ public class AuthController {
     @Autowired
     JwtProvider jwtProvider;
 
-    //Espera un json y lo convierte a tipo clase NuevoUsuario
     @PostMapping("/nuevo")
-    public ResponseEntity<?> nuevoUsuario(@Valid @RequestBody NuevoUsuario nuevoUsuario,
+    public ResponseEntity<?> nuevoUsuario(@RequestBody NuevoUsuario nuevoUsuario,
                                           BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            return new ResponseEntity<>("Campos mal o email invalido", HttpStatus.BAD_REQUEST);
-        }
         if(usuarioService.existsByUsuario(nuevoUsuario.getNombreUsuario())){
             return new ResponseEntity<>("Ese nombre ya existe", HttpStatus.BAD_REQUEST);
         }
@@ -60,7 +57,7 @@ public class AuthController {
             return new ResponseEntity<>("Ese email ya existe", HttpStatus.BAD_REQUEST);
         }
 
-        Usuario usuario = new Usuario(nuevoUsuario.getNombre(), nuevoUsuario.getNombreUsuario(),
+        Usuario usuario = new Usuario(nuevoUsuario.getNombreUsuario(),
                 nuevoUsuario.getEmail(), passwordEncoder.encode(nuevoUsuario.getPassword()));
 
         Set<Rol> roles = new HashSet<>();
@@ -75,7 +72,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult){
+    public ResponseEntity<JwtDto> login( @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult){
         if (bindingResult.hasErrors())
             return new ResponseEntity("Campos mal", HttpStatus.BAD_REQUEST);
         Authentication authentication =
@@ -88,4 +85,42 @@ public class AuthController {
         JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
         return new ResponseEntity<>(jwtDto, HttpStatus.OK);
     }
+    @GetMapping("/listarUsuario")
+    @ResponseBody
+    public List<Usuario> listar(){
+        return usuarioService.us() ;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
