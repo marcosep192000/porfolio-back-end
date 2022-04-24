@@ -1,5 +1,6 @@
 package com.example.backendPortfolio.entity;
 
+import com.example.backendPortfolio.security.entity.Usuario;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -27,8 +28,11 @@ public class Persona {
     @Email
     @Column
     private String email;
+    @NotNull
     @Column
     private String telefono;
+    @NotNull
+    @NotEmpty(message = "DAdada")
     @Column
     private String direccion;
     @Column
@@ -44,11 +48,19 @@ public class Persona {
     @Column
     private String estado;
 
+@ManyToOne(fetch = FetchType.LAZY)
+private Usuario user;
+
+
     @OneToMany( cascade = CascadeType.ALL)
     @JoinColumn(name ="id_experiencia")
     private List<Experiencia> experiencias;
 
-public boolean esNulo()
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id_usuario")
+    private Usuario usuario;
+
+    public boolean esNulo()
 {
     return false;
 }

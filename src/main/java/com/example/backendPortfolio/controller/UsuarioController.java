@@ -1,6 +1,7 @@
 package com.example.backendPortfolio.controller;
 
 import com.example.backendPortfolio.entity.Persona;
+import com.example.backendPortfolio.security.dto.Mensaje;
 import com.example.backendPortfolio.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,10 +24,12 @@ public class UsuarioController {
     {
         return ResponseEntity.ok(personaService.listarTodos());
     }
+    
+    
 @PostMapping("/persona/add")
     public ResponseEntity<Persona> save(@Valid  @RequestBody  Persona persona,BindingResult bindingResult){
         if (bindingResult.hasErrors())
-            return new ResponseEntity("datos mal ingresados",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Mensaje("datos mal ingresados"),HttpStatus.BAD_REQUEST);
                 personaService.crear(persona);
         return new ResponseEntity("DATOS GURDADOS" , HttpStatus.CREATED);
 

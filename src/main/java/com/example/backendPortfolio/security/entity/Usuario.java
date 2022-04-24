@@ -17,8 +17,6 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idUsuario;
-
-
     @NotNull
     @Column(unique = true)
     private String nombreUsuario;
@@ -28,8 +26,7 @@ public class Usuario {
     @NotNull
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Persona> personasList;
 
 

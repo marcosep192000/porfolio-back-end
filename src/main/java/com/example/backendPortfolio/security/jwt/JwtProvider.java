@@ -1,6 +1,5 @@
 package com.example.backendPortfolio.security.jwt;
 
-
 import com.example.backendPortfolio.security.entity.UsuarioMain;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
