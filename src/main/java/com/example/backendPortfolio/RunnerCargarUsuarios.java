@@ -18,8 +18,8 @@ public class RunnerCargarUsuarios implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
        System.out.println("Insert MySQL");
-        Usuario u = new Usuario("marcospa","maros@gmail.com",pass.encode("123456"));
-        usuarioService.save(u);
+     /*   Usuario u = new Usuario("marcospa","maros@gmail.com",pass.encode("123456"));
+        usuarioService.save(u);*/
         System.out.println("Fin insercion Base de datos");
 
     }
