@@ -3,14 +3,19 @@ package com.example.backendPortfolio.controller;
 import com.example.backendPortfolio.entity.Persona;
 import com.example.backendPortfolio.security.dto.Mensaje;
 import com.example.backendPortfolio.service.PersonaService;
+import org.h2.util.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("v1/user")
@@ -32,11 +37,21 @@ public class UsuarioController {
     }
     //agregar Usuario solo una vez
 @PostMapping("/add")
-    public ResponseEntity<Persona> save(@Valid  @RequestBody  Persona persona,BindingResult bindingResult){
-        if (bindingResult.hasErrors())
-            return new ResponseEntity(new Mensaje("Datos Erroneos"),HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Persona> save(@Valid @RequestBody  Persona persona, BindingResult bindingResult){
+     Map map = new HashMap<>();
+        if (bindingResult.hasErrors()) {
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            fieldErrors.forEach(error -> {
+              map.put(error.getField(), error.getDefaultMessage());
+            });
+            System.out.println(fieldErrors);
+
+
+            return new ResponseEntity(map, HttpStatus.BAD_REQUEST);
+        }
+
                 personaService.crear(persona);
-        return new ResponseEntity(new Mensaje("Datos de usuario Cradors con exito"), HttpStatus.CREATED);
+        return new ResponseEntity(new Mensaje("¡Datos de Usuario Creados con exito!"), HttpStatus.CREATED);
     }
 
     //actualizar Usuario
