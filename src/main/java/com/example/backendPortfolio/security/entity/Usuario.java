@@ -4,6 +4,7 @@ package com.example.backendPortfolio.security.entity;
 import com.example.backendPortfolio.entity.Persona;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.List;
@@ -21,6 +22,7 @@ public class Usuario {
     @Column(unique = true)
     private String nombreUsuario;
     @NotNull
+    @Email
     @Column(unique = true)
     private String email;
     @NotNull

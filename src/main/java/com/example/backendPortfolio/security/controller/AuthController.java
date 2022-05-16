@@ -47,7 +47,7 @@ public class AuthController {
     @Autowired
     JwtProvider jwtProvider;
 
-    @PostMapping("/nuevo")
+    @PostMapping("/add")
     public ResponseEntity<?> nuevoUsuario(@RequestBody NuevoUsuario nuevoUsuario,
                                           BindingResult bindingResult){
         if(usuarioService.existsByUsuario(nuevoUsuario.getNombreUsuario())){

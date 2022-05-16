@@ -44,7 +44,11 @@ public class PersonaService implements IpersonaService {
       persona.deleteById(id);
     }
 
-
+    @Override
+    public boolean buscarPorEmail(String email) {
+        persona.findByEmail(email);
+        return true;
+    }
 
 
 }

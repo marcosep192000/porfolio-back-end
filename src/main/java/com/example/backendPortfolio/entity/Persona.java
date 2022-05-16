@@ -20,18 +20,18 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
-@Table(name = "usuario_datos")
+@Table(name = "persona")
 public class Persona {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_persona", nullable = false)
     private Long id;
 
-    @Email
-    @Column
-    @NotEmpty(message = "El campo email no puede estar vacio")
-    @NotBlank(message = "El campo email no puede estar vacio")
+@NotBlank
+    @Email(message = "datos erroneos")
+    @Column(unique = true)
     private String email;
+
     @NotNull
     @Column
     @Size(min = 8, max = 20, message = "El campo contraseña debe tener entre 8 y 20 caracteres")
